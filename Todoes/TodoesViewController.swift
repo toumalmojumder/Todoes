@@ -8,9 +8,9 @@
 
 import UIKit
 
-class TodoesViewController: UITableViewController {
+class TodoesViewController: UITableViewController,UITextFieldDelegate {
 
-    let itemArray = ["find me","buy me","destroy Demon"]
+    var itemArray = ["find me","buy me","destroy Demon"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,15 +41,27 @@ class TodoesViewController: UITableViewController {
     }
 
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "Add New Todo Item", message: " ", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Add Item", style: .default){(action) in
-           
+       
+        let alertController = UIAlertController(title: "Add New Todo Item", message: "", preferredStyle: .alert)
+        
+        alertController.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Create a new Item"
         }
-        alert.addTextField(configurationHandler: { (textField) in
-            textField.placeholder = "Create new Item"
+        let saveAction = UIAlertAction(title: "Add Item", style: .default, handler: { alert -> Void in
+            let firstTextField = alertController.textFields![0] as UITextField
+            
+            self.itemArray.append(firstTextField.text ?? "new Item")
+            self.tableView.reloadData()
+            print(firstTextField.text ?? 0)
+           
         })
-         alert.addAction(action)
-        present(alert, animated: true, completion: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
+            (action : UIAlertAction!) -> Void in })
+        
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
