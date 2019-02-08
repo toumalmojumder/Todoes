@@ -40,5 +40,16 @@ class TodoesViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Add New Todo Item", message: " ", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add Item", style: .default){(action) in
+           
+        }
+        alert.addTextField(configurationHandler: { (textField) in
+            textField.placeholder = "Create new Item"
+        })
+         alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
 }
 
