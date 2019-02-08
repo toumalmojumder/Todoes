@@ -11,9 +11,15 @@ import UIKit
 class TodoesViewController: UITableViewController,UITextFieldDelegate {
 
     var itemArray = ["find me","buy me","destroy Demon"]
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let items = defaults.array(forKey: "TodoListArray") as? [String]
+        {
+            itemArray = items
+        }
         // Do any additional setup after loading the view, typically from a nib.
     }
     //table view showing array data
@@ -51,6 +57,7 @@ class TodoesViewController: UITableViewController,UITextFieldDelegate {
             let firstTextField = alertController.textFields![0] as UITextField
             
             self.itemArray.append(firstTextField.text ?? "new Item")
+            self.defaults.set(self.itemArray, forKey: "TodoListArray")
             self.tableView.reloadData()
             print(firstTextField.text ?? 0)
            
